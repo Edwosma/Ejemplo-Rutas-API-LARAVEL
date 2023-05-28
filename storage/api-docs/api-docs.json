@@ -1,0 +1,78 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Api Calificaciones",
+        "description": "Listado de las URI'S de la Api Calificaciones",
+        "version": "2.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000"
+        }
+    ],
+    "paths": {
+        "/api/calificaciones": {
+            "get": {
+                "tags": [
+                    "Calificaciones"
+                ],
+                "summary": "Listado de todos los registros de calificaciones",
+                "operationId": "7f3669d923765e3b30472d9db66c2db9",
+                "responses": {
+                    "100": {
+                        "description": "Succes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "rows": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    },
+                                                    "cliente_id": {
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    },
+                                                    "emprendimiento_id": {
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    },
+                                                    "visualizacion_id": {
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    },
+                                                    "calificacion": {
+                                                        "type": "number",
+                                                        "example": "4"
+                                                    },
+                                                    "estado": {
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "example": "2023-02-23T00:09:16.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "example": "2023-02-23T12:33:45.000000Z"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

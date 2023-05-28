@@ -24,4 +24,9 @@ class emprendimiento extends Model
      public function comentarios(){
         return $this->hasMany('App\Models\Comentario','emprendedimiento_id');
     }
+
+     // relacion uno a uno
+     public function calificaciones(){
+        return $this->hasMany('App\Models\calificacion','emprendedimiento_id');
+    }
 }
