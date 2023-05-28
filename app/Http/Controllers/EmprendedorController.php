@@ -285,6 +285,27 @@ class EmprendedorController extends Controller
         }
         return response()->json($respuesta, 200);
     }
+    private function factorial($n) 
+    {
+        if ($n <= 1 ) {
+            return 1;
+         }
+         $factorial =1;
+            for ($i=2;$i<=$n;$i++){
+                $factorial *=$i;
+            }
+            return $factorial;
+        
+    }
+    
+
+    
+    private function calcularPrediccionPoisson($lambda, $tiempoObservacion) {
+        return (pow($lambda, $tiempoObservacion) * (exp(-$lambda)) )/ ($tiempoObservacion);
+    }
+
+    
+   
 
     public function informeGerencial(){
         //$emprendedores = User::where('estadoRegistro',1)->get();
@@ -303,10 +324,16 @@ class EmprendedorController extends Controller
                         return response()->json(['message' => 'Emprendedor no encontrado'], 404);
                     }
 
-                $resumenEmpredimientos = $emprendedor->emprendimientos->map(function ($emprendimiento) {
+                    $resumenEmpredimientos = $emprendedor->emprendimientos->map(function ($emprendimiento) {
+                        $conteoVisualizaciones = $emprendimiento->visualizaciones->count();
+                        $tiempoObservacion = 2; // Coloca el tiempo de observación en horas aquí
+                        $lambda=($conteoVisualizaciones/2);
+                        //$prediccion = $this->calcularPrediccionPoisson($conteoVisualizaciones, $tiempoObservacion);
+                        $prediccion= ((($conteoVisualizaciones/2)*($conteoVisualizaciones/2))/(2))*((exp(-($conteoVisualizaciones/2))));
                         return [
                             'nombre' => $emprendimiento->nombre_emprendimiento,
-                            'conteoVisualizaciones' => $emprendimiento->visualizaciones->count(),
+                            'conteoVisualizaciones' => $conteoVisualizaciones,
+                            'prediccionVisualizaciones' => number_format($prediccion * 100, 2),
                             'conteoComentarios' => $emprendimiento->comentarios->count(),
                             'conteoCalificaciones' => $emprendimiento->calificaciones->count(),
                         ];
