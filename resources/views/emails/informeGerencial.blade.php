@@ -61,6 +61,29 @@
                             </tbody>
                         </table>
                     </div>
+                    <h5 class="card-title">Prediccion de Visualizaciones (aplicando metodo Poisson)</h5>
+                    <hr width="100%" />
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Empredimiento</th>
+                                    <th scope="col">% Visualizaciones</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($resumenEmpredimientos as $dato)
+                                <tr class="table">
+                                    <td>{{$dato['nombre']}}</td>
+                                    <td>{{$dato['prediccionVisualizaciones']}}</td>
+                                    
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
         </div>
