@@ -37,7 +37,7 @@
         <div class="col-sm-12 col-md-12 col-lg-12">
             <div class="card border-secondary mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">Resumen</h5>
+                    <h5 class="card-title">Resumen (conteo de usuarios por acción realizada)</h5>
                     <hr width="100%" />
                     <div class="table-responsive">
                         <table class="table table-bordered">
@@ -46,6 +46,7 @@
                                     <th scope="col">Empredimiento</th>
                                     <th scope="col"># Visualizaciones</th>
                                     <th scope="col"># Comentarios</th>
+                                    <th scope="col"># Calificaciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,6 +55,7 @@
                                     <td>{{$dato['nombre']}}</td>
                                     <td>{{$dato['conteoVisualizaciones']}}</td>
                                     <td>{{$dato['conteoComentarios']}}</td>
+                                    <td>{{$dato['conteoCalificaciones']}}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -113,6 +115,31 @@
                                                 <td>{{$comentariod->cliente->nombre}}</td>
                                                 <td>{{$comentariod->comentario}}</td>
                                                 <td>{{$comentariod->updated_at}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                 <p class="mb-0 text-muted">Calificaciones por cliente:</p>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Cliente</th>
+                                                <th scope="col">Calificacion</th>
+                                                <th scope="col">Fecha</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($empredimiento->calificaciones as $calificaciond)
+                                            <tr class="table">
+                                                <td>{{$calificaciond->cliente->nombre}}</td>
+                                                <td>{{$calificaciond->calificacion}}</td>
+                                                <td>{{$calificaciond->updated_at}}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>

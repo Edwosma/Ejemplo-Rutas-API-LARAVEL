@@ -297,7 +297,7 @@ class EmprendedorController extends Controller
 
             //$emprendedor = User::where('estado_registro',1)->first();
             foreach($emprendedores as $emprendedor){
-                $datosEmprendimientos = User::with(['emprendimientos.visualizaciones', 'emprendimientos.comentarios'])->find($emprendedor->id);
+                $datosEmprendimientos = User::with(['emprendimientos.visualizaciones', 'emprendimientos.comentarios', 'emprendimientos.calificaciones'])->find($emprendedor->id);
 
                     if (!$emprendedor) {
                         return response()->json(['message' => 'Emprendedor no encontrado'], 404);
@@ -308,6 +308,7 @@ class EmprendedorController extends Controller
                             'nombre' => $emprendimiento->nombre_emprendimiento,
                             'conteoVisualizaciones' => $emprendimiento->visualizaciones->count(),
                             'conteoComentarios' => $emprendimiento->comentarios->count(),
+                            'conteoCalificaciones' => $emprendimiento->calificaciones->count(),
                         ];
                     });
 

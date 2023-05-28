@@ -7,6 +7,7 @@ use App\Models\Emprendimiento;
 use App\Models\Cliente;
 use App\Models\TiposEmprendimiento;
 use App\Repositories\ComentarioRepository;
+use App\Repositories\CalificacionRepository;
 use App\Repositories\VisualizacionRepository;
 use App\Repositories\ResponseApiRepository;
 use App\Models\User;
@@ -16,10 +17,12 @@ class EmprendimientoController extends Controller
      
    
     private $comentarioRepository;
+    private $calificacionRepository;
     private $visualizacionRepository;
     private $responseApiRepository;
-    public function __construct(ComentarioRepository $comentarioRepository,VisualizacionRepository $visualizacionRepository,ResponseApiRepository $responseApiRepository) {
+    public function __construct(CalificacionRepository $calificacionRepository,ComentarioRepository $comentarioRepository,VisualizacionRepository $visualizacionRepository,ResponseApiRepository $responseApiRepository) {
         $this->comentarioRepository = $comentarioRepository;
+        $this->calificacionRepository = $calificacionRepository;
         $this->visualizacionRepository = $visualizacionRepository;
         $this->responseApiRepository = $responseApiRepository;
     
@@ -223,6 +226,103 @@ class EmprendimientoController extends Controller
                     'mensajePersonalizado' => 'No se encontro un cliente con el id suministrado',
                 );
                 $respuesta = $this->responseApiRepository->error('450',$infoAdicional);
+            }
+        }catch (\Exception $e) {
+            $infoAdicional = array(
+                'mensaje' => $e->getMessage()                                      
+            );
+            $respuesta = $this->responseApiRepository->error('400',$infoAdicional);
+        }
+        return response()->json($respuesta, 200);
+    }
+
+    public function calificarEmprendimiento(Request $request){
+        try {
+            $validatedData = $this->validate($request, [
+                'clienteId' => 'required|numeric',
+                'emprendimientoId' => 'required|numeric',
+                
+                'calificacion' => ['required', 'numeric', 'in:0,1,2,3,4,5']
+            ]);
+            $cliente_id= $request->input('clienteId');
+            $emprendedimiento_id= $request->input('emprendimientoId');
+            $calificacion= $request->input('calificacion');
+
+            //busqueme si exite algun cliente ya registrada con esos datos
+            $clienteValidacion = Cliente::where('id', $cliente_id)->first();
+            if(isset($clienteValidacion ->id)){
+                //busqueme si exite algun emprendimiento ya registrada con esos datos
+                $empredimientoValidacion = Emprendimiento::where('id', $emprendedimiento_id)->first();
+                if(isset($empredimientoValidacion->id)){
+
+                    //por solid inversion de dependencias valide si exite alguna valide si exite algun una visualizacion ya registrada con esos datos
+
+                    $visualizacionEmprendimiento = $this->visualizacionRepository->verificacionVisualizacion($cliente_id,$emprendedimiento_id);
+                    if($visualizacionEmprendimiento){
+
+                        //por solid inversion de dependencias valide si exite alguna calificacion ya registrada con esos datos
+                        $calificacionValidacion = $this->calificacionRepository->verificacionCalificacion($cliente_id,$emprendedimiento_id);
+                        $data = [
+                            'cliente_id' => $cliente_id,
+                            'emprendedimiento_id' => $emprendedimiento_id,
+                            'visualizacion_id' => $visualizacionEmprendimiento->id,
+                            'calificacion' => $calificacion,
+                            'estado'=> 1
+                        ];
+                        // en el if se utiliza el $ indicando que si calificacionValidacion tiene algo dentro se toma como verdadero
+                        if ($calificacionValidacion) {
+                            $bandActualizacion = $this->calificacionRepository->actualizarCalificacion($calificacionValidacion->id, $data);
+                            if($bandActualizacion){
+                                $infoAdicional = array(
+                                    'mensajePersonalizado' => 'Calificacion actualizado'
+                                );
+                                $respuesta = $this->responseApiRepository->success($infoAdicional);
+                            }else{
+                                $respuesta = array(
+                                    'respuesta' => 'ok',
+                                    'codigo' => '100',
+                                    'mensaje' => 'Calificacion No actualizado'
+                                );
+                                
+                            }
+
+                        }else{
+                            //si no existia una calificacion registrada creela
+                            $calificacionInsertado = $this->calificacionRepository->insertarCalificacion($data);
+                            if($calificacionInsertado){
+                                $infoAdicional = array(
+                                    'mensajePersonalizado' => 'Calificacion registrado',
+                                    'calificacion' => $calificacionInsertado,
+                                );
+                                $respuesta = $this->responseApiRepository->success($infoAdicional);
+
+                            }else{
+                                
+                                $infoAdicional = array(
+                                    'mensajePersonalizado' => 'El Calificacion no se pudo registrar',
+                                );
+                                $respuesta = $this->responseApiRepository->error('460',$infoAdicional);
+                            }
+                        }
+                    }else{
+                     
+                        $infoAdicional = array(
+                            'mensajePersonalizado' => 'No ha realizado una visualizacion',
+                        );
+                        $respuesta = $this->responseApiRepository->error('460',$infoAdicional);
+                    }
+                }else{
+                 
+                    $infoAdicional = array(
+                        'mensajePersonalizado' => 'No se encuentra el emprendimiento',
+                    );
+                    $respuesta = $this->responseApiRepository->error('460',$infoAdicional);
+                }
+            }else{
+                $infoAdicional = array(
+                    'mensajePersonalizado' => 'No se encontro un cliente con el id suministrado',
+                );
+                $respuesta = $this->responseApiRepository->error('460',$infoAdicional);
             }
         }catch (\Exception $e) {
             $infoAdicional = array(

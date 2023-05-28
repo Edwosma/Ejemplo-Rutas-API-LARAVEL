@@ -64,6 +64,17 @@ Route::post('/comentar-emprendimiento', array(
     'uses' => 'EmprendimientoController@comentarEmprendimiento'
 ));
 
+Route::post('/calificar-emprendimiento', array(
+    'as' => 'calificarEmprendimiento',
+    'middleware' => ['auth:sanctum'],
+    'uses' => 'EmprendimientoController@calificarEmprendimiento'
+));
+
+Route::get('/calificaciones', array(
+    'as' => 'index',
+    'uses' => 'CalificacionController@index'
+));
+
 Route::get('/informe-gerencial', array(
     'as' => 'informeGerencial',
    
