@@ -8,6 +8,15 @@
     "servers": [
         {
             "url": "http://127.0.0.1:8000"
+        },
+        {
+            "url": "http://127.0.0.1:8000"
+        },
+        {
+            "url": "http://127.0.0.1:8000"
+        },
+        {
+            "url": "http://127.0.0.1:8000"
         }
     ],
     "paths": {
@@ -48,6 +57,187 @@
                                                     "calificacion": {
                                                         "type": "number",
                                                         "example": "4"
+                                                    },
+                                                    "estado": {
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "example": "2023-02-23T00:09:16.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "example": "2023-02-23T12:33:45.000000Z"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/clientes": {
+            "get": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Listado de todos los registros de calificaciones",
+                "operationId": "de55d50d1b708d9e5c63ee3f8fe8f54a",
+                "responses": {
+                    "100": {
+                        "description": "Succes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "rows": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    },
+                                                    "nombre": {
+                                                        "type": "string",
+                                                        "example": "Aderson Felix"
+                                                    },
+                                                    "email": {
+                                                        "type": "email",
+                                                        "example": "aleacosta@.com"
+                                                    },
+                                                    "clave": {
+                                                        "type": "string",
+                                                        "example": "123456"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "example": "2023-02-23T00:09:16.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "example": "2023-02-23T12:33:45.000000Z"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/emprendedores": {
+            "get": {
+                "tags": [
+                    "Emprendedores"
+                ],
+                "summary": "Listado de todos los registros de calificaciones",
+                "operationId": "16704e3dfd7948c71c20419cb316e2c7",
+                "responses": {
+                    "100": {
+                        "description": "Succes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "rows": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Aderson Felix"
+                                                    },
+                                                    "email": {
+                                                        "type": "email",
+                                                        "example": "aleacosta@.com"
+                                                    },
+                                                    "identification": {
+                                                        "type": "string",
+                                                        "example": "123456"
+                                                    },
+                                                    "identification_type": {
+                                                        "type": "number",
+                                                        "example": "0"
+                                                    },
+                                                    "estado": {
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    },
+                                                    "password": {
+                                                        "type": "string",
+                                                        "example": "123456"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "example": "2023-02-23T00:09:16.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "example": "2023-02-23T12:33:45.000000Z"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/emprendimientos": {
+            "get": {
+                "tags": [
+                    "Emprendimientos"
+                ],
+                "summary": "Listado de todos los registros de calificaciones",
+                "operationId": "1d65c9a3f261d74c98f0840479bd9d9e",
+                "responses": {
+                    "100": {
+                        "description": "Succes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "rows": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    },
+                                                    "idEmprendor": {
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    },
+                                                    "nombre_emprendimiento": {
+                                                        "type": "string",
+                                                        "example": "Terramoda"
+                                                    },
+                                                    "descripcion": {
+                                                        "type": "string",
+                                                        "example": "moda y mucho mas"
                                                     },
                                                     "estado": {
                                                         "type": "number",

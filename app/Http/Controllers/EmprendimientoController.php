@@ -11,7 +11,15 @@ use App\Repositories\CalificacionRepository;
 use App\Repositories\VisualizacionRepository;
 use App\Repositories\ResponseApiRepository;
 use App\Models\User;
-
+/**
+* @OA\Infoooo(
+*             title="Api Emprendimientos", 
+*             version="2.0",
+*             description="Listado de las URI'S de la Api Emprendimientos"
+* )
+*
+* @OA\Server(url="http://127.0.0.1:8000")
+*/
 class EmprendimientoController extends Controller
 {
      
@@ -332,4 +340,71 @@ class EmprendimientoController extends Controller
         }
         return response()->json($respuesta, 200);
     }
+    
+        /**
+         * Display a listing of the resource.
+         *
+         * @return \Illuminate\Http\Response
+         */
+        /**
+         * Listado de todos los registros de calificaciones
+         * @OA\Get (
+         *     path="/api/emprendimientos",
+         *     tags={"Emprendimientos"},
+         *     @OA\Response(
+         *         response=100,
+         *         description="Succes",
+         *         @OA\JsonContent(
+         *             @OA\Property(
+         *                 type="array",
+         *                 property="rows",
+         *                 @OA\Items(
+         *                     type="object",
+         *                     @OA\Property(
+         *                         property="id",
+         *                         type="number",
+         *                         example="1"
+         *                     ),                  
+         *                     @OA\Property(
+         *                         property="idEmprendor",
+         *                         type="number",
+         *                         example="1"
+         *                     ),
+         *                      @OA\Property(
+         *                         property="nombre_emprendimiento",
+     *                         type="string",
+     *                         example="Terramoda"
+         *                     ),
+         *                      @OA\Property(
+         *                         property="descripcion",
+     *                         type="string",
+     *                         example="moda y mucho mas"
+         *                     ),
+         *                      @OA\Property(
+         *                         property="estado",
+         *                         type="number",
+         *                         example="1"
+         *                     ),
+         *                     @OA\Property(
+         *                         property="created_at",
+         *                         type="string",
+         *                         example="2023-02-23T00:09:16.000000Z"
+         *                     ),
+         *                     @OA\Property(
+         *                         property="updated_at",
+         *                         type="string",
+         *                         example="2023-02-23T12:33:45.000000Z"
+         *                     )
+         *                 )
+         *             )
+         *         )
+         *     )
+         * )
+         */
+        public function index()
+        {
+            return Emprendimiento::all();
+        }
+    
 }
+
