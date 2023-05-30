@@ -13,8 +13,20 @@ use App\Models\User;
 use App\Models\Visualizacion;
 use App\Models\Emprendimiento;
 
+/**
+* @OA\Infoo(
+*             title="Api Emprendedor", 
+*             version="1.0",
+*             description="Listado de las URI'S de la Api Emprendedor"
+* )
+*
+* @OA\Server(url="http://127.0.0.1:8000")
+*/
+
+
 class EmprendedorController extends Controller
 {
+  
     private $responseApiRepository;
     //
     public function __construct(ResponseApiRepository $responseApiRepository) {
@@ -300,8 +312,8 @@ class EmprendedorController extends Controller
     
 
     
-    private function calcularPrediccionPoisson($lambda, $tiempoObservacion) {
-        return (pow($lambda, $tiempoObservacion) * (exp(-$lambda)) )/ ($tiempoObservacion);
+    public function calcularPrediccionPoisson($lambda, $conteoVisualizaciones) {
+        return ((($conteoVisualizaciones/2)*($conteoVisualizaciones/2))/(2))*((exp(-($conteoVisualizaciones/2))));
     }
 
     
@@ -363,5 +375,79 @@ class EmprendedorController extends Controller
             $respuesta = $this->responseApiRepository->error('400',$infoAdicional);
         }
         return response()->json($respuesta, 200);
+    }
+  /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    /**
+     * Listado de todos los registros de calificaciones
+     * @OA\Get (
+     *     path="/api/emprendedores",
+     *     tags={"Emprendedores"},
+     *     @OA\Response(
+     *         response=100,
+     *         description="Succes",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="rows",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(
+     *                         property="id",
+     *                         type="number",
+     *                         example="1"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="name",
+     *                         type="string",
+     *                         example="Aderson Felix"
+     *                     ),
+     *                      @OA\Property(
+     *                         property="email",
+     *                         type="email",
+     *                         example="aleacosta@.com"
+     *                     ),
+     *                      @OA\Property(
+     *                         property="identification",
+     *                         type="string",
+     *                         example="123456"                                               
+     *                     ),
+     *                      @OA\Property(
+     *                         property="identification_type",
+     *                         type="number",
+     *                         example="0"
+     *                     ),
+     *                      @OA\Property(
+     *                         property="estado",
+     *                         type="number",
+     *                         example="1"
+     *                     ),    
+     *                     @OA\Property(
+     *                         property="password",
+     *                         type="string",
+     *                         example="123456"                                               
+     *                     ),
+     *                     @OA\Property(
+     *                         property="created_at",
+     *                         type="string",
+     *                         example="2023-02-23T00:09:16.000000Z"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="updated_at",
+     *                         type="string",
+     *                         example="2023-02-23T12:33:45.000000Z"
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     )
+     * )
+     */
+    public function index()
+    {
+        return User::all();
     }
 }

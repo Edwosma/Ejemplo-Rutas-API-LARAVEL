@@ -21,11 +21,16 @@ Route::post('/registrar-emprendedor', array(
     'as' => 'registrarEmpredendor',
     'uses' => 'EmprendedorController@registrarEmpredendor'
 ));
+Route::get('/emprendedores', array(
+    'as' => 'index',
+    'uses' => 'EmprendedorController@index'
+));
 
 Route::post('/gestionar-registro-emprendedor', array(
     'as' => 'gestionRegistroEmprendedor',
     'uses' => 'EmprendedorController@gestionRegistroEmprendedor'
 ));
+
 
 Route::get('/emprendedores-estado-solicitud/{estadoSolicitud}', array(
     'as' => 'consultarEmprendoresEstadoSolicitud',
@@ -36,6 +41,10 @@ Route::post('/crear-emprendimiento', array(
     'as' => 'crearEmprendimiento',
     'middleware' => ['auth:sanctum'],
     'uses' => 'EmprendimientoController@crearEmprendimiento'
+));
+Route::get('/emprendimientos', array(
+    'as' => 'index',
+    'uses' => 'EmprendimientoController@index'
 ));
 Route::get('/consultar-empredimientos-estado/{estado}', array(
     'as' => 'consultarEmprendimientoEstado',
@@ -52,6 +61,10 @@ Route::post('/gestionar-registro-cliente', array(
     'uses' => 'ClienteController@gestionRegistroCliente'
 ));
 
+Route::get('/clientes', array(
+    'as' => 'index',
+    'uses' => 'ClienteController@index'
+));
 Route::post('/visualizar-emprendimiento', array(
     'as' => 'visualizarEmprendimiento',
     'middleware' => ['auth:sanctum'],
